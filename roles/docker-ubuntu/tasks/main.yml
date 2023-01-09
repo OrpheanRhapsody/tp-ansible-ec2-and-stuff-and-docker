@@ -62,3 +62,8 @@
     name: hello-world-test
     image: hello-world
     state: started
+  register: my-docker-hello-world
+
+- name: display register
+  debug:
+    var: "{{ my-docker-hello-world }}"
