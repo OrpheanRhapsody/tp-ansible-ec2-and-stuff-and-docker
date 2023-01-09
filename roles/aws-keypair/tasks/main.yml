@@ -1,0 +1,15 @@
+---
+  # tasks file for aws-keypair
+- name: Create a key pair
+  amazon.aws.ec2_key:
+    name: my_ec2_keypair_with_ansible
+    region: "{{ aws_region }}"
+  register: my_ec2_key_pair
+
+- name: explore register key_pair
+  debug:
+    var: "{{ my_ec2_key_pair }}"
+
+- name: Save the private key
+  copy: content="{{ my_ec2_key_pair.key.private_key }}" dest="./my_ec2_keypair_with_ansible.pem" mode=0400
+  when: my_ec2_key_pair.changed

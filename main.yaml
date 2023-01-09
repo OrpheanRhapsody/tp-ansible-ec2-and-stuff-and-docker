@@ -1,0 +1,5 @@
+---
+# file: site.yml
+# master yaml
+- import_playbook: ec2.yaml
+- import_playbook: docker.yaml

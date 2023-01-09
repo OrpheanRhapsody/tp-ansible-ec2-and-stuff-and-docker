@@ -1,0 +1,25 @@
+---
+# tasks file for aws-add-ec2-to-inventory
+- name: Gather info about any instance with name
+  amazon.aws.ec2_instance_info:
+    region: "{{ aws_region }}"
+    filters:
+      "tag:Name": "{{ my_ec2_tag }}"
+      instance-state-name: [ "running" ]
+  register: ec2_instance_info
+
+- name: checking wether or not the instance already exists
+  debug: 
+    var: ec2_instance_info
+
+- name: print the public_dns_name
+  debug:
+    msg: the instance dns name is "{{ ec2_instance_info.instances[0].public_dns_name }}"
+
+- name: add new machine to inventory
+  ansible.builtin.add_host:
+    hostname: "{{ ec2_instance_info.instances[0].public_dns_name }}"
+    ansible_ssh_user: ubuntu
+    ansible_ssh_private_key_file: "./my_ec2_keypair_with_ansible.pem"
+    groups:
+      - my_ec2

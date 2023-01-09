@@ -1,0 +1,7 @@
+- name: Docker installation
+  # connection: ansible.netcommon.network_cli
+  hosts: my_ec2
+  gather_facts: true
+  become: true
+  roles:
+    - { role: docker-ubuntu }

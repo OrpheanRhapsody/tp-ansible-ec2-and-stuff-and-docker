@@ -1,0 +1,18 @@
+---
+# tasks file for aws-secgroup
+- name: Create an EC2 security group
+  amazon.aws.ec2_group:
+    name: my_security_group_with_ansible
+    description: Create a security group to allow SSH access from anywhere
+    vpc_id: "{{ my_vpc.vpc.id }}"
+    region: "{{ aws_region }}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+  register: my_security_group
+
+- name: checking the register
+  ansible.builtin.debug: 
+    var: my_security_group

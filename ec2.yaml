@@ -1,0 +1,10 @@
+- hosts: all
+  gather_facts: true
+  # become: true
+  roles:
+    - aws-vpc
+    - aws-secgroup
+    - aws-keypair
+    - aws-igw
+    - aws-ec2
+    - aws-add-ec2-to-inventory

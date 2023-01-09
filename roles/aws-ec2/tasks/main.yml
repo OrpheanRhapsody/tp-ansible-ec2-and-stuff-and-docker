@@ -1,0 +1,23 @@
+---
+  # tasks file for aws-ec2
+    
+- name: Create an EC2 instance
+  amazon.aws.ec2_instance:
+    name: "Ansible-training-Romain"
+    instance_type: "{{ my_flavor }}"
+    image_id: "{{ ubuntu_paris }}"
+    exact_count: 1
+    region: "{{ aws_region }}"
+    network:
+      assign_public_ip: true
+    security_group: "{{ my_security_group.group_id }}"
+    vpc_subnet_id: "{{ my_subnet.subnet.id }}"
+    wait: true
+    key_name: "my_ec2_keypair_with_ansible"
+    tags:
+      Name: "{{ my_ec2_tag }}"
+  register: my_ec2_instance
+        
+- name: ec2 register
+  debug:
+    var: " {{ my_ec2_instance }}"

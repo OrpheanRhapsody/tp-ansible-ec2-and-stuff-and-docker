@@ -1,0 +1,15 @@
+- name: create a VPC
+  amazon.aws.ec2_vpc_net:
+    name: my-vpc-with-ansible
+    cidr_block: 10.0.0.0/16
+    region: "{{ aws_region }}"
+    state: present
+  register: my_vpc
+
+- name: checking the register
+  ansible.builtin.debug: 
+    var: my_vpc
+    
+- name: testing the variable
+  ansible.builtin.debug:
+    msg: 'this is the vpc id: "{{ my_vpc.vpc.id }}" '

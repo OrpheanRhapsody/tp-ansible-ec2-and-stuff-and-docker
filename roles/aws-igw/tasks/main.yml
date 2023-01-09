@@ -1,0 +1,41 @@
+---
+- name: associate subnet to the VPC previously created
+  amazon.aws.ec2_vpc_subnet:
+   vpc_id: "{{ my_vpc.vpc.id }}"
+   region: "{{ aws_region }}"
+   cidr: 10.0.1.16/28
+   state: present
+   map_public: yes
+   resource_tags:
+     Name: my_subnet_with_ansible
+  register: my_subnet
+
+- name: explore subnet register
+  debug:
+    var: my_subnet
+ 
+- name: create IGW
+  amazon.aws.ec2_vpc_igw:
+   vpc_id: "{{ my_vpc.vpc.id }}"
+   region: "{{ aws_region }}"
+   state: "present"
+   tags:
+     Name: "my_igw_with_ansible"
+  register: my_igw
+
+- name: explore igw register
+  debug:
+    var: my_igw
+
+- name: routing the traffic to the internet gateway via a route table
+  ec2_vpc_route_table:
+    vpc_id: "{{ my_vpc.vpc.id }}"
+    region: "{{ aws_region }}"
+    subnets:
+      - "{{ my_subnet.subnet.id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ my_igw.gateway_id  }}"
+  register: public_route_table
+
+  
