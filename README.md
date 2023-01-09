@@ -15,7 +15,7 @@ I've set up my AWS environment by using the AWS CLI `aws configure` and the envi
 The goal of the project was to create (at least) one EC2 instance with several requirements (VPC, Internet Gateway, Security group which allows SSH connection, creation of a SSH Key pair).
 
 - The project is organized as follow:
-
+```
 ├── README.md                           --> this file
 ├── ec2.yaml                            --> playbook which calls all the necessary roles til the EC2 creation.
 ├── docker.yaml                         --> playbook which calls the docker role
@@ -32,6 +32,6 @@ The goal of the project was to create (at least) one EC2 instance with several r
     ├── aws-secgroup                    --> role to create the security group 
     ├── aws-vpc                         --> role to create the vcp
     └── docker-ubuntu                   --> role to install Docker on a Ubuntu instance
+```
 
-
-As for now 
+As for now, Docker only install an hello world image.
