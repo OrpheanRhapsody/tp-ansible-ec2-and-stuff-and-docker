@@ -34,4 +34,4 @@ The goal of the project was to create (at least) one EC2 instance with several r
     └── docker-ubuntu                   --> role to install Docker on a Ubuntu instance
 ```
 
-As for now, Docker only install an hello world image.
+As for now, Docker only installs a hello world image.
